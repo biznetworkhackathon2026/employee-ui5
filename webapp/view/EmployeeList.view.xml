@@ -1,0 +1,110 @@
+<mvc:View
+    controllerName="com.hackathon.employeeui5.controller.EmployeeList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.m"
+    displayBlock="true">
+
+    <Page
+        id="employeeListPage"
+        title="{i18n>employeeListTitle}"
+        showNavButton="false">
+
+        <headerContent>
+            <Button
+                icon="sap-icon://add"
+                text="{i18n>onboardEmployee}"
+                type="Emphasized"
+                press=".onOnboardPress" />
+        </headerContent>
+
+        <subHeader>
+            <Toolbar>
+                <SearchField
+                    id="searchField"
+                    width="300px"
+                    placeholder="{i18n>searchPlaceholder}"
+                    search=".onSearch"
+                    liveChange=".onSearch" />
+                <ToolbarSpacer />
+                <Select id="statusFilter" change=".onFilterByStatus">
+                    <core:Item key="All" text="{i18n>all}" />
+                    <core:Item key="Active" text="{i18n>active}" />
+                    <core:Item key="Inactive" text="{i18n>inactive}" />
+                </Select>
+            </Toolbar>
+        </subHeader>
+
+        <content>
+            <Table
+                id="employeeTable"
+                items="{
+                    path: '/Employees',
+                    parameters: {
+                        $select: 'ID,firstName,lastName,email,department,jobTitle,hireDate,status'
+                    }
+                }"
+                growing="true"
+                growingThreshold="20"
+                alternateRowColors="true"
+                noDataText="{i18n>noEmployees}">
+
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{i18n>employees}" level="H3" />
+                        <ToolbarSpacer />
+                        <Button
+                            icon="sap-icon://delete"
+                            text="{i18n>delete}"
+                            type="Negative"
+                            enabled="{= ${employeeList>/selectedCount} > 0}"
+                            press=".onDeleteSelected" />
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column><Text text="{i18n>firstName}" /></Column>
+                    <Column><Text text="{i18n>lastName}" /></Column>
+                    <Column><Text text="{i18n>email}" /></Column>
+                    <Column><Text text="{i18n>department}" /></Column>
+                    <Column><Text text="{i18n>jobTitle}" /></Column>
+                    <Column><Text text="{i18n>hireDate}" /></Column>
+                    <Column><Text text="{i18n>status}" /></Column>
+                    <Column hAlign="End"><Text text="{i18n>actions}" /></Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem
+                        type="Navigation"
+                        press=".onEmployeePress"
+                        selected="{employeeList>selected}">
+                        <cells>
+                            <Text text="{firstName}" />
+                            <Text text="{lastName}" />
+                            <Text text="{email}" />
+                            <Text text="{department}" />
+                            <Text text="{jobTitle}" />
+                            <Text text="{
+                                path: 'hireDate',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: { style: 'medium' }
+                            }" />
+                            <ObjectStatus
+                                text="{status}"
+                                state="{= ${status} === 'Active' ? 'Success' : 'Error'}" />
+                            <HBox>
+                                <Button
+                                    icon="sap-icon://edit"
+                                    type="Transparent"
+                                    tooltip="{i18n>edit}"
+                                    press=".onEditPress" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

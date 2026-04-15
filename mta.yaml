@@ -1,0 +1,97 @@
+_schema-version: "3.1"
+ID: employee-ui5
+description: UI5 Employee Management App
+version: 1.0.0
+
+modules:
+  - name: employee-ui5-app
+    type: html5
+    path: webapp
+    parameters:
+      disk-quota: 256M
+      memory: 64M
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+  - name: employee-ui5-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: employee-ui5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - employee-ui5-app.zip
+          name: employee-ui5-app
+          target-path: resources/
+
+  - name: employee-ui5-dest-content
+    type: com.sap.application.content
+    requires:
+      - name: employee-ui5-destination-service
+        parameters:
+          content-target: true
+      - name: employee-ui5-repo-host
+        parameters:
+          service-key:
+            name: employee-ui5-repo-host-key
+      - name: employee-xsuaa
+        parameters:
+          service-key:
+            name: employee-xsuaa-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: employee_ui5_repo_host
+              ServiceInstanceName: employee-ui5-repo-host
+              ServiceKeyName: employee-ui5-repo-host-key
+              sap.cloud.service: com.hackathon.employee
+            - Authentication: OAuth2UserTokenExchange
+              Name: employee_xsuaa
+              ServiceInstanceName: employee-xsuaa
+              ServiceKeyName: employee-xsuaa-key
+              sap.cloud.service: com.hackathon.employee
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+
+resources:
+  - name: employee-ui5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  - name: employee-ui5-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: employee-service-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://employee-service-srv.cfapps.us10.hana.ondemand.com
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-plan: lite
+
+  - name: employee-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ../employee-service/xs-security.json

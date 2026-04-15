@@ -1,0 +1,19 @@
+{
+  "name": "employee-ui5",
+  "version": "1.0.0",
+  "description": "UI5 Employee Management App",
+  "private": true,
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build --all",
+    "lint": "eslint webapp"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3",
+    "@openui5/sap.ui.core": "^1.120",
+    "@openui5/sap.m": "^1.120",
+    "@openui5/sap.f": "^1.120",
+    "@openui5/sap.ui.layout": "^1.120",
+    "@openui5/themelib_sap_horizon": "^1.120"
+  }
+}

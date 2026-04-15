@@ -1,0 +1,119 @@
+{
+    "_version": "1.58.0",
+    "sap.app": {
+        "id": "com.hackathon.employeeui5",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": { "version": "1.0.0" },
+        "dataSources": {
+            "employeeService": {
+                "uri": "/employee/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://employee",
+            "favIcon": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "com.hackathon.employeeui5.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "appView"
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "JSON",
+                "viewType": "XML",
+                "viewPath": "com.hackathon.employeeui5.view",
+                "controlId": "appNav",
+                "controlAggregation": "pages",
+                "async": true
+            },
+            "routes": [
+                {
+                    "name": "EmployeeList",
+                    "pattern": "",
+                    "target": ["EmployeeList"]
+                },
+                {
+                    "name": "EmployeeDetail",
+                    "pattern": "employee/{employeeId}",
+                    "target": ["EmployeeDetail"]
+                },
+                {
+                    "name": "EmployeeOnboard",
+                    "pattern": "onboard",
+                    "target": ["EmployeeOnboard"]
+                }
+            ],
+            "targets": {
+                "EmployeeList": {
+                    "viewId": "employeeList",
+                    "viewName": "EmployeeList",
+                    "viewLevel": 1
+                },
+                "EmployeeDetail": {
+                    "viewId": "employeeDetail",
+                    "viewName": "EmployeeDetail",
+                    "viewLevel": 2
+                },
+                "EmployeeOnboard": {
+                    "viewId": "employeeOnboard",
+                    "viewName": "EmployeeOnboard",
+                    "viewLevel": 2
+                }
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.hackathon.employeeui5.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "employeeService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true
+                }
+            }
+        },
+        "dependencies": {
+            "minUI5Version": "1.108.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.f": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        }
+    }
+}

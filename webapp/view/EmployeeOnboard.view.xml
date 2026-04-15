@@ -1,0 +1,101 @@
+<mvc:View
+    controllerName="com.hackathon.employeeui5.controller.EmployeeOnboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page
+        id="onboardPage"
+        title="{i18n>onboardEmployee}"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <MessageStrip
+                    id="onboardMsg"
+                    visible="false"
+                    showCloseButton="true"
+                    class="sapUiSmallMarginBottom" />
+
+                <Panel headerText="{i18n>personalInfo}" expandable="false">
+                    <layout:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                        columnsXL="2" columnsL="2" columnsM="2">
+                        <layout:content>
+                            <Label text="{i18n>firstName}" required="true" />
+                            <Input id="firstName" value="{onboard>/firstName}"
+                                placeholder="{i18n>firstName}" valueLiveUpdate="true" />
+
+                            <Label text="{i18n>lastName}" required="true" />
+                            <Input id="lastName" value="{onboard>/lastName}"
+                                placeholder="{i18n>lastName}" valueLiveUpdate="true" />
+
+                            <Label text="{i18n>email}" required="true" />
+                            <Input id="email" value="{onboard>/email}"
+                                type="Email" placeholder="name@example.com" valueLiveUpdate="true" />
+
+                            <Label text="{i18n>phoneNumber}" />
+                            <Input id="phoneNumber" value="{onboard>/phoneNumber}"
+                                type="Tel" placeholder="+1-555-0000" />
+
+                            <Label text="{i18n>address}" />
+                            <TextArea id="address" value="{onboard>/address}"
+                                rows="2" growing="true" placeholder="{i18n>address}" />
+                        </layout:content>
+                    </layout:SimpleForm>
+                </Panel>
+
+                <Panel headerText="{i18n>jobInfo}" expandable="false" class="sapUiSmallMarginTop">
+                    <layout:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                        columnsXL="2" columnsL="2" columnsM="2">
+                        <layout:content>
+                            <Label text="{i18n>department}" />
+                            <Select id="department" selectedKey="{onboard>/department}">
+                                <core:Item key="" text="-- Select Department --" />
+                                <core:Item key="Engineering" text="Engineering" />
+                                <core:Item key="HR" text="HR" />
+                                <core:Item key="Finance" text="Finance" />
+                                <core:Item key="Sales" text="Sales" />
+                                <core:Item key="Marketing" text="Marketing" />
+                                <core:Item key="Operations" text="Operations" />
+                                <core:Item key="IT" text="IT" />
+                                <core:Item key="Legal" text="Legal" />
+                            </Select>
+
+                            <Label text="{i18n>jobTitle}" />
+                            <Input id="jobTitle" value="{onboard>/jobTitle}"
+                                placeholder="{i18n>jobTitle}" />
+
+                            <Label text="{i18n>hireDate}" />
+                            <DatePicker id="hireDate" value="{onboard>/hireDate}"
+                                valueFormat="yyyy-MM-dd" displayFormat="medium"
+                                placeholder="YYYY-MM-DD" />
+
+                            <Label text="{i18n>salary}" />
+                            <Input id="salary" value="{onboard>/salary}"
+                                type="Number" placeholder="0.00" />
+                        </layout:content>
+                    </layout:SimpleForm>
+                </Panel>
+
+                <HBox justifyContent="End" class="sapUiSmallMarginTop">
+                    <Button text="{i18n>cancel}" press=".onNavBack" class="sapUiSmallMarginEnd" />
+                    <Button
+                        id="submitBtn"
+                        text="{i18n>onboardEmployee}"
+                        type="Emphasized"
+                        press=".onSubmit"
+                        enabled="{= !!${onboard>/firstName} &amp;&amp; !!${onboard>/lastName} &amp;&amp; !!${onboard>/email}}" />
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

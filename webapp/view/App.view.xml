@@ -1,0 +1,7 @@
+<mvc:View
+    controllerName="com.hackathon.employeeui5.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    <App id="appNav" />
+</mvc:View>
