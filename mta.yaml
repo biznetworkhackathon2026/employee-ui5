@@ -42,7 +42,7 @@ resources:
                 Name: employee-service-api
                 ProxyType: Internet
                 Type: HTTP
-                URL: https://b0362cb0trial-dev-employee-service-srv.cfapps.us10-001.hana.ondemand.com
+                URL: https://biznetworkhackathon2026-employee-service.cfapps.us10-001.hana.ondemand.com
                 HTML5.DynamicDestination: true
                 HTML5.ForwardAuthToken: true
             existing_destinations_policy: update
