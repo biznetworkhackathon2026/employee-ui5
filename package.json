@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ui5 serve",
     "build": "ui5 build --all",
-    "postbuild": "cp nginx.conf dist/nginx.conf && echo 'nginx_conf: nginx.conf' > dist/Staticfile",
+    "postbuild": "cp nginx.conf dist/nginx.conf",
     "lint": "eslint webapp"
   },
   "devDependencies": {
