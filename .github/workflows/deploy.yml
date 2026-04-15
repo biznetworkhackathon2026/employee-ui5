@@ -41,17 +41,9 @@ jobs:
             -s "${{ secrets.CF_SPACE }}"
 
       - name: Push to CF
-        run: |
-          cf push employee-ui5-app \
-            -p dist \
-            -b staticfile_buildpack \
-            -m 64M \
-            --no-start
+        run: cf push employee-ui5-app -f manifest.yml
 
       - name: Map friendly route
         run: |
           cf map-route employee-ui5-app cfapps.us10-001.hana.ondemand.com \
             --hostname biznetworkhackathon2026-employee-ui5 || true
-
-      - name: Start app
-        run: cf start employee-ui5-app
