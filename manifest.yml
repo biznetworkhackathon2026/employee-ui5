@@ -1,0 +1,9 @@
+applications:
+  - name: employee-ui5-app
+    memory: 64M
+    disk_quota: 512M
+    buildpacks:
+      - staticfile_buildpack
+    path: dist
+    services:
+      - employee-xsuaa
